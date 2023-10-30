@@ -33,6 +33,9 @@ components:
       properties:
         description:
           type: string
+        quantity:
+          type: number
+          description: Quantidade do produto
     ProductCreatedResponse:
       type: object
       properties:
@@ -40,6 +43,8 @@ components:
           type: number
         description:
           type: string
+        quantity:
+          type: number
     ProductCreationFailResponse:
       type: object
       properties:

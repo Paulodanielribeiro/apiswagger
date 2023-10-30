@@ -5,7 +5,6 @@ components:
       required:
         - name
         - price
-        - category
       properties:
         name:
           type: string
@@ -13,20 +12,16 @@ components:
         price:
           type: number
           description: Preço do produto
-        inStock:
-          type: boolean
-          description: Flag indicando se o produto está em estoque ou não
-        category:
-          type: string
-          description: Categoria do produto
+        quantity:
+          type: number
+          description: Quantidade do produto
         description:
           type: string
           description: Descrição do produto
       example:
         name: Produto Exemplo
         price: 100.00
-        inStock: true
-        category: Categoria Exemplo
+        quantity: 10
         description: Descrição do produto exemplo
     ProductCreatedResponse:
       allOf:
@@ -42,8 +37,7 @@ components:
             id: 1
             name: Produto Exemplo
             price: 100.00
-            inStock: true
-            category: Categoria Exemplo
+            quantity: 10
             description: Descrição do produto exemplo
     ProductCreationFailResponse:
       type: object
@@ -55,7 +49,7 @@ components:
           example:
             - "Name cannot be empty"
             - "Price must be a positive number"
-            - "Category cannot be empty"
+            - "Quantity must be a positive number"
 
 paths:
   /products:
@@ -66,7 +60,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#components/schemas/Product'
       responses:
         '201':
           description: Produto criado com sucesso
