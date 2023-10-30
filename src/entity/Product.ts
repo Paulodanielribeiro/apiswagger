@@ -1,22 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column({ nullable: false })
-  name: string
+  name: string;
 
-  @Column({ nullable: false })
-  price: number
+  @Column({ nullable: false, type: 'float' }) // Use 'float' para representar valores de preço como números de ponto flutuante
+  price: number;
 
   @Column({ default: true })
-  inStock: boolean
+  inStock: boolean;
 
   @Column({ nullable: false })
-  category: string
+  category: string;
 
   @Column({ nullable: true })
-  description: string
+  description: string;
 }

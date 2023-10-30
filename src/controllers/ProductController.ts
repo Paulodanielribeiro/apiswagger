@@ -1,12 +1,14 @@
-import { Repository, UpdateResult, getRepository } from 'typeorm';
+import { Repository, UpdateResult, } from 'typeorm';
 import { Product } from '../entity/Product';
 import { Request, Response } from 'express';
+import { AppDataSource } from '../data-source';
 
 export class ProductController {
   private _repo: Repository<Product>;
 
   constructor() {
-    this._repo = getRepository(Product);
+    this._repo = AppDataSource.getRepository(Product);
+
   }
 
   async save(product: Product): Promise<Product> {

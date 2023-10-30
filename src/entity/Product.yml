@@ -73,13 +73,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductCreatedResponse'
+                $ref: '#components/schemas/ProductCreatedResponse'
         '400':
           description: Falha na criação do produto
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductCreationFailResponse'
+                $ref: '#components/schemas/ProductCreationFailResponse'
   /products/{id}:
     get:
       summary: Obtém um produto pelo ID
@@ -95,7 +95,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#components/schemas/Product'
         '404':
           description: Produto não encontrado
   /products/description/{description}:
@@ -115,6 +115,6 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: '#components/schemas/Product'
         '404':
           description: Produtos não encontrados
