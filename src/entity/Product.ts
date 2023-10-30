@@ -19,10 +19,4 @@ export class Product {
 
   @Column({ nullable: true })
   description: string
-  
-  @Column({ nullable: false })
-  deadline: Date
-
-  @Column({ nullable: false })
-  severity: number
 }

@@ -31,9 +31,7 @@ productsRouter.post('/', async (req: Request, res: Response) => {
 
   if (errorMessages.length === 0) {
     const product = new Product()
-    product.deadline = deadlineDate
     product.description = description
-    product.severity = severityNumber
     const savedProduct = await productCtrl.save(product)
     return res.status(201).json({ product: savedProduct })
   }

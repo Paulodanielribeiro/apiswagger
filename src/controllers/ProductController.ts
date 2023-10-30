@@ -1,41 +1,80 @@
-// Importando as dependências necessárias
-import { Repository, UpdateResult } from 'typeorm'
-import { Product } from '../entity/Product'
-import { AppDataSource } from '../data-source'
+import { Repository, UpdateResult, getRepository } from 'typeorm';
+import { Product } from '../entity/Product';
+import { Request, Response } from 'express';
 
-// Definindo a classe do controlador do produto
 export class ProductController {
-  // Variável privada para armazenar o repositório do produto
-  private _repo: Repository<Product>
+  private _repo: Repository<Product>;
 
-  // Construtor para inicializar o repositório do produto
   constructor() {
-    this._repo = AppDataSource.getRepository(Product)
+    this._repo = getRepository(Product);
   }
 
-  // Método para salvar um produto no banco de dados
   async save(product: Product): Promise<Product> {
-    const savedProduct: Product = await this._repo.save(product)
-    return savedProduct
+    const savedProduct: Product = await this._repo.save(product);
+    return savedProduct;
   }
 
-  // Método para encontrar produtos que ainda não foram realizados
-  async findProductsToBePerformed(): Promise<Product[]> {
-    const products: Product[] = await this._repo.find({
-      where: {
-        performed: false,
-      },
-      order: {
-        severity: 'DESC',
-      },
-    })
-
-    return products
+  async getAllProducts(): Promise<Product[]> {
+    const products: Product[] = await this._repo.find();
+    return products;
   }
 
-  // Método para marcar um produto como realizado
-  async setProductAsPerformed(id: number): Promise<UpdateResult> {
-    const result: UpdateResult = await this._repo.update(id, { performed: true })
-    return result
+  async getProductById(id: number): Promise<Product | undefined> {
+    const product: Product | undefined = await this._repo.findOne({ where: { id } });
+    return product;
+  }
+
+  async getProductByDescription(description: string): Promise<Product | undefined> {
+    const product: Product | undefined = await this._repo.findOne({ where: { description } });
+    return product;
   }
 }
+
+const productController = new ProductController();
+
+export const createProduct = async (req: Request, res: Response) => {
+  try {
+    const product = req.body as Product;
+    const savedProduct = await productController.save(product);
+    res.status(200).json(savedProduct);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await productController.getAllProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getProductById = async (req: Request, res: Response) => {
+  try {
+    const productId = parseInt(req.params.id);
+    const product = await productController.getProductById(productId);
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getProductByDescription = async (req: Request, res: Response) => {
+  try {
+    const productDescription = req.params.description;
+    const product = await productController.getProductByDescription(productDescription);
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
