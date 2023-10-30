@@ -1,0 +1,121 @@
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - name
+        - price
+        - category
+      properties:
+        name:
+          type: string
+          description: Nome do produto
+        price:
+          type: number
+          description: Preço do produto
+        inStock:
+          type: boolean
+          description: Flag indicando se o produto está em estoque ou não
+        category:
+          type: string
+          description: Categoria do produto
+        description:
+          type: string
+          description: Descrição do produto
+      example:
+        name: Produto Exemplo
+        price: 100.00
+        inStock: true
+        category: Categoria Exemplo
+        description: Descrição do produto exemplo
+    ProductCreatedResponse:
+      allOf:
+        - $ref: "#components/schemas/Product"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: number
+              description: O identificador do produto salvo no banco de dados
+          example:
+            id: 1
+            name: Produto Exemplo
+            price: 100.00
+            inStock: true
+            category: Categoria Exemplo
+            description: Descrição do produto exemplo
+    ProductCreationFailResponse:
+      type: object
+      properties:
+        errorMessages:
+          type: array
+          items:
+            type: string
+          example:
+            [
+              "Name cannot be empty",
+              "Price must be a positive number",
+              "Category cannot be empty"
+            ]
+paths:
+  /products:
+    post:
+      summary: Cria um novo produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Product'
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/ProductCreatedResponse'
+        '400':
+          description: Falha na criação do produto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/ProductCreationFailResponse'
+  /products/{id}:
+    get:
+      summary: Obtém um produto pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+        '404':
+          description: Produto não encontrado
+  /products/description/{description}:
+    get:
+      summary: Obtém produtos pela descrição
+      parameters:
+        - name: description
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produtos encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        '404':
+          description: Produtos não encontrados
