@@ -8,7 +8,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#components/schemas/Product"
+              $ref: "#/components/schemas/Product"
       responses:
         201:
           description: Produto cadastrado com sucesso
@@ -18,11 +18,32 @@ paths:
                 type: object
                 properties:
                   product:
-                    $ref: "#components/schemas/ProductCreatedResponse"
+                    $ref: "#/components/schemas/ProductCreatedResponse"
         400:
           description: O objeto de produto recebido é inválido
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#components/schemas/ProductCreationFailResponse"
+                $ref: "#/components/schemas/ProductCreationFailResponse"
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        description:
+          type: string
+    ProductCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        description:
+          type: string
+    ProductCreationFailResponse:
+      type: object
+      properties:
+        errorMessages:
+          type: array
+          items:
+            type: string
