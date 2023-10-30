@@ -11,10 +11,10 @@ export class Product {
   @Column({ nullable: false, type: 'float' }) // Use 'float' para representar valores de preço como números de ponto flutuante
   price: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   quantity: number;
 
 
-  @Column({ nullable: true })
+  @Column({ nullable: false })
   description: string;
 }

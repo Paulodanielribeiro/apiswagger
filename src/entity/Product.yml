@@ -5,6 +5,8 @@ components:
       required:
         - name
         - price
+        - quantity
+        - description
       properties:
         name:
           type: string
@@ -47,68 +49,7 @@ components:
           items:
             type: string
           example:
-            - "Name cannot be empty"
-            - "Price must be a positive number"
+            - "Name cannot be empty",
+            - "Price must be a positive number",
             - "Quantity must be a positive number"
 
-paths:
-  /products:
-    post:
-      summary: Cria um novo produto
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#components/schemas/Product'
-      responses:
-        '201':
-          description: Produto criado com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#components/schemas/ProductCreatedResponse'
-        '400':
-          description: Falha na criação do produto
-          content:
-            application/json:
-              schema:
-                $ref: '#components/schemas/ProductCreationFailResponse'
-  /products/{id}:
-    get:
-      summary: Obtém um produto pelo ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: number
-      responses:
-        '200':
-          description: Produto encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#components/schemas/Product'
-        '404':
-          description: Produto não encontrado
-  /products/description/{description}:
-    get:
-      summary: Obtém produtos pela descrição
-      parameters:
-        - name: description
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Produtos encontrados
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#components/schemas/Product'
-        '404':
-          description: Produtos não encontrados

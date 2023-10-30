@@ -1,54 +1,64 @@
 paths:
   /products:
     post:
-      summary: Salva um novo produto
+      summary: Cria um novo produto
       tags: [products]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#components/schemas/Product"
+              $ref: '#components/schemas/Product'
       responses:
-        201:
-          description: Produto cadastrado com sucesso
+        '201':
+          description: Produto criado com sucesso
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  product:
-                    $ref: "#components/schemas/ProductCreatedResponse"
-        400:
-          description: O objeto de produto recebido é inválido
+                $ref: '#components/schemas/ProductCreatedResponse'
+        '400':
+          description: Falha na criação do produto
           content:
             application/json:
               schema:
-                $ref: "#components/schemas/ProductCreationFailResponse"
-
-components:
-  schemas:
-    Product:
-      type: object
-      properties:
-        description:
-          type: string
-        quantity:
-          type: number
-          description: Quantidade do produto
-    ProductCreatedResponse:
-      type: object
-      properties:
-        id:
-          type: number
-        description:
-          type: string
-        quantity:
-          type: number
-    ProductCreationFailResponse:
-      type: object
-      properties:
-        errorMessages:
-          type: array
-          items:
+                $ref: '#components/schemas/ProductCreationFailResponse'
+  /products/{id}:
+    get:
+      summary: Obtém um produto pelo ID
+      tags: [products]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Product'
+        '404':
+          description: Produto não encontrado
+  /products/description/{description}:
+    get:
+      summary: Obtém produtos pela descrição
+      tags: [products]
+      parameters:
+        - name: description
+          in: path
+          required: true
+          schema:
             type: string
+      responses:
+        '200':
+          description: Produtos encontrados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        '404':
+          description: Produtos não encontrados
