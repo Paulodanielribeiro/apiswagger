@@ -7,8 +7,6 @@ AppDataSource.initialize().then(async () => {
     const product = new Product() // Criando uma nova instância de Product
     product.name = "Example Product"
     product.price = 100.00
-    product.inStock = true
-    product.category = "Example Category"
     product.description = "This is an example product"
     await AppDataSource.manager.save(product) // Salvando o produto
     console.log("Saved a new product with id: " + product.id)
