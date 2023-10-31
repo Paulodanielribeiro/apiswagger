@@ -2,7 +2,7 @@ export const swaggerOptions = {
   definition: {
     openapi: '3.0.1',
     info: {
-      title: 'Tasks API',
+      title: 'Product API',
       version: '0.1.0',
       description: 'API para estudo de documentação de API',
       license: {

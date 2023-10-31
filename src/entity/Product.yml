@@ -43,7 +43,6 @@ components:
           items:
             type: string
           example:
-            - "description cannot be empty",
-            - "Price cannot be empty",
+            - "description cannot be empty"
+            - "Price cannot be empty"
             - "Quantity cannot be empty"
-
