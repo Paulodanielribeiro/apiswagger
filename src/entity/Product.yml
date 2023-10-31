@@ -3,14 +3,10 @@ components:
     Product:
       type: object
       required:
-        - name
         - price
         - quantity
         - description
       properties:
-        name:
-          type: string
-          description: Nome do produto
         price:
           type: number
           description: Preço do produto
@@ -21,10 +17,9 @@ components:
           type: string
           description: Descrição do produto
       example:
-        name: Produto Exemplo
         price: 100.00
         quantity: 10
-        description: Descrição do produto exemplo
+        description: roupa
     ProductCreatedResponse:
       allOf:
         - $ref: "#components/schemas/Product"
@@ -37,10 +32,9 @@ components:
               description: O identificador do produto salvo no banco de dados
           example:
             id: 1
-            name: Produto Exemplo
             price: 100.00
             quantity: 10
-            description: Descrição do produto exemplo
+            description: roupa
     ProductCreationFailResponse:
       type: object
       properties:
@@ -49,7 +43,7 @@ components:
           items:
             type: string
           example:
-            - "Name cannot be empty",
-            - "Price must be a positive number",
-            - "Quantity must be a positive number"
+            - "description cannot be empty",
+            - "Price cannot be empty",
+            - "Quantity cannot be empty"
 
