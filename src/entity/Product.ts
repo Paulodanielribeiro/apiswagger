@@ -5,8 +5,6 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
- 
-
   @Column({ nullable: false, type: 'float', scale:2 })
   price: number;
 

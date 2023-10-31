@@ -22,7 +22,7 @@ productsRouter.post('/products', async (req, res) => {
       product.description = description;
       product.price = price;
       product.quantity = quantity;
-     const savedProduct = await productCtrl.createProduct(product); // Calling the createProduct method with req and res
+     const savedProduct = await productCtrl.createProduct(product); 
       return res.status(201).json({ task:savedProduct,message: 'Product registered' });
     }
 
@@ -36,7 +36,7 @@ productsRouter.post('/products', async (req, res) => {
 productsRouter.get('/products/:id', async (req, res) => {
   try {
     const productId = parseInt(req.params.id);
-    const product = await productCtrl.getProductById(id); // Calling the getProductById method with req, res, and productId
+    const product = await productCtrl.getProductById(productId); 
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -52,7 +52,7 @@ productsRouter.get('/products/:id', async (req, res) => {
 productsRouter.get('/products/description/:description', async (req, res) => {
   try {
     const productDescription = req.params.description;
-    const products = await productCtrl.getProductByDescription(description); // Calling the getProductByDescription method with req, res, and productDescription
+    const products = await productCtrl.getProductByDescription(productDescription);
 
     return res.status(200).json({products});
   } catch (error) {
